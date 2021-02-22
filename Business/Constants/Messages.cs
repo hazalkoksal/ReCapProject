@@ -7,14 +7,13 @@ namespace Business.Constants
     public static class Messages
     {
         //All
-        public static string Added = "Eklendi";
-        public static string NameInvalid = "Geçersiz isim";
         public static string MaintenanceTime = "Sistem bakımda";
-        public static string Listed = "Listelendi";
-        public static string DailyPriceInvalid = "Geçersiz fiyat bilgisi";
 
         //Car
-        public static string CarInvalid = "Geçersiz araç bilgisi";
+        public static string CarAdded = "Araç eklendi";
+        public static string CarListed = "Araçlar listelendi";
+        public static string CarNameInvalid = "Araç ismi geçersiz";
+        public static string DailyPriceInvalid = "Fiyat bilgisi geçersiz";
 
         //Rental
         public static string CarRanted = "Araç kiralandı";
