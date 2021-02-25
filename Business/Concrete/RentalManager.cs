@@ -1,11 +1,13 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -22,11 +24,11 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            var rnt = _rentalDal.Get(r => r.CarId == rental.CarId && r.ReturnDate == null);
+            IResult result = BusinessRules.Run(CheckIfCarAvaliable(rental.CarId));
 
-            if(rnt!=null)
+            if(result != null)
             {
-                return new ErrorResult(Messages.CarIsNotAvaliable);               
+                return result;
             }
             
             _rentalDal.Add(rental);
@@ -46,6 +48,16 @@ namespace Business.Concrete
         public IDataResult<List<RentalDetailDTO>> GetRentalDetails()
         {
             return new SuccessDataResult<List<RentalDetailDTO>>(_rentalDal.GetRentalDetails());
+        }
+
+        private IResult CheckIfCarAvaliable(int carId)
+        {
+            var result = _rentalDal.GetAll(r => r.CarId == carId && r.ReturnDate == null).Any();
+            if(result)
+            {
+                return new ErrorResult(Messages.CarIsNotAvaliable);
+            }
+            return new SuccessResult();                
         }
     }
 }
