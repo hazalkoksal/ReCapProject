@@ -30,7 +30,7 @@ namespace Business.Concrete
                 return result;
             }
 
-            carImage.ImagePath = FileHelper.Add(file);
+            carImage.CarImagePath = FileHelper.Add(file);
             carImage.Date = DateTime.Now;
 
             _carImageDal.Add(carImage);
@@ -39,7 +39,7 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage carImage)
         {
-            FileHelper.Delete(carImage.ImagePath);
+            FileHelper.Delete(carImage.CarImagePath);
 
             _carImageDal.Delete(carImage);
             return new SuccessResult();
@@ -52,7 +52,7 @@ namespace Business.Concrete
 
         public IResult Update(IFormFile file, CarImage carImage)
         {
-            carImage.ImagePath = FileHelper.Update(_carImageDal.Get(i=>i.ImageId == carImage.ImageId).ImagePath,file);
+            carImage.CarImagePath = FileHelper.Update(_carImageDal.Get(i=>i.CarImageId == carImage.CarImageId).CarImagePath,file);
             carImage.Date = DateTime.Now;
 
             _carImageDal.Update(carImage);
@@ -78,7 +78,7 @@ namespace Business.Concrete
             if(!result)
             {
                 string path = @"\Images\logo.jpg";
-                return new List<CarImage> { new CarImage { ImageId=1,CarId=carId,ImagePath=path,Date=DateTime.Now} };
+                return new List<CarImage> { new CarImage { CarImageId=1,CarId=carId,CarImagePath=path,Date=DateTime.Now} };
             }
 
             return _carImageDal.GetAll(i => i.CarId == carId);
