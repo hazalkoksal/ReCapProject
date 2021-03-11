@@ -25,6 +25,7 @@ namespace Business.Concrete
         public IResult Add(IFormFile file, CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfImageCountOfCarCorrect(carImage.CarId));
+
             if (result != null)
             {
                 return result;
@@ -40,23 +41,28 @@ namespace Business.Concrete
         public IResult Delete(CarImage carImage)
         {
             FileHelper.Delete(carImage.CarImagePath);
-
             _carImageDal.Delete(carImage);
+
             return new SuccessResult();
         }
 
         public IDataResult<List<CarImage>> GetByCarId(int carId)
         {
-            return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(carId));
+            return GetCarImages(carId);
         }
 
         public IResult Update(IFormFile file, CarImage carImage)
         {
-            carImage.CarImagePath = FileHelper.Update(_carImageDal.Get(i=>i.CarImageId == carImage.CarImageId).CarImagePath,file);
+            carImage.CarImagePath = FileHelper.Update(carImage.CarImagePath,file);
             carImage.Date = DateTime.Now;
 
             _carImageDal.Update(carImage);
             return new SuccessResult();
+        }
+
+        public IDataResult<CarImage> GetById(int carImageId)
+        {
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(i => i.CarImageId == carImageId));
         }
 
         private IResult CheckIfImageCountOfCarCorrect(int carId)
@@ -71,17 +77,21 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private List<CarImage> CheckIfCarImageNull(int carId)
+        private IDataResult<List<CarImage>> GetCarImages(int carId)
         {
             var result = _carImageDal.GetAll(i => i.CarId == carId).Any();
 
-            if(!result)
+            if (!result)
             {
-                string path = @"\Images\logo.jpg";
-                return new List<CarImage> { new CarImage { CarImageId=1,CarId=carId,CarImagePath=path,Date=DateTime.Now} };
+                string path = @"\wwwroot\Uploads\logo.jpg";
+
+                List<CarImage> carImages = new List<CarImage>();
+                carImages.Add(new CarImage { CarId = carId, CarImagePath = path, Date = DateTime.Now });
+
+                return new SuccessDataResult<List<CarImage>>(carImages);
             }
 
-            return _carImageDal.GetAll(i => i.CarId == carId);
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(i => i.CarId == carId).ToList());
         }
     }
 }

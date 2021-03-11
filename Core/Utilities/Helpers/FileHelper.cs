@@ -11,61 +11,43 @@ namespace Core.Utilities.Helpers
     {
         public static string Add(IFormFile file)
         {
-            var sourcePath = Path.GetTempFileName();
+            var result = NewPath(file);
 
-            if(file.Length > 0)
+            using (var stream = new FileStream(result, FileMode.Create))
             {
-                using(var stream = new FileStream(sourcePath,FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
+                file.CopyTo(stream);
             }
 
-            var result = newPath(file);
-            File.Move(sourcePath, result);
             return result;
         }
 
         public static string Update(string sourcePath,IFormFile file)
         {
-            var result = newPath(file);
+            var result = NewPath(file);
 
-            if(sourcePath.Length > 0)
+            using (var stream = new FileStream(result, FileMode.Create))
             {
-                using(var stream = new FileStream(result,FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
+                file.CopyTo(stream);
             }
 
             File.Delete(sourcePath);
             return result;
         }
 
-        public static IResult Delete(string sourcePath)
+        public static void Delete(string sourcePath)
         {
-            try
-            {
-                File.Delete(sourcePath);
-            }
-            catch (Exception exception)
-            {
-
-                return new ErrorResult(exception.Message);
-            }
-
-            return new SuccessResult();
+            File.Delete(sourcePath);
         }
 
-        public static string newPath(IFormFile file)
+        public static string NewPath(IFormFile file)
         {
-            FileInfo fi = new FileInfo(file.FileName);
-            string fileExtension = fi.Extension;
+            FileInfo fileInfo = new FileInfo(file.FileName); //dosya adı
+            string fileExtension = fileInfo.Extension; //dosya uzantısı
 
-            string path = Environment.CurrentDirectory + @"\Images";
-            var newPath = Guid.NewGuid().ToString() + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year + fileExtension;
+            string path = Environment.CurrentDirectory + @"\wwwroot\Uploads"; //yeni yol
+            var name = Guid.NewGuid().ToString() + fileExtension; //yeni ad + dosya uzantısı
 
-            string result = $@"{path}\{newPath}";
+            string result = $@"{path}\{name}";
             return result;
         }
     }
