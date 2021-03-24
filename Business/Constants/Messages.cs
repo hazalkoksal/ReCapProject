@@ -22,6 +22,10 @@ namespace Business.Constants
         //CarImage
         public static string ImageCountOfCarError = "Bir aracın en fazla 5 fotoğrafı olabilir";
 
+        //Card
+        public static string CardValid = "Ödeme işlemi başarıyla gerçekleştirildi";
+        public static string CardInvalid = "Kredi Kartı bilgileriniz geçersiz";
+
         //Authorization
         public static string AuthorizationDenied = "Yetkiniz yok";
         public static string UserRegistered = "Kayıt oldu";

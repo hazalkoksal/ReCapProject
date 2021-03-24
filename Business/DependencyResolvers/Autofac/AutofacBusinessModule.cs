@@ -38,6 +38,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EFUserDal>().As<IUserDal>().SingleInstance();
 
+            builder.RegisterType<CardManager>().As<ICardService>().SingleInstance();
+            builder.RegisterType<EFCardDal>().As<ICardDal>().SingleInstance();
+
             builder.RegisterType<AuthManager>().As<IAuthService>();
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
