@@ -23,16 +23,31 @@ namespace Business.Concrete
         }
 
         public IResult Add(Rental rental)
-        {
-            IResult result = BusinessRules.Run(CheckIfCarAvaliable(rental.CarId));
-
-            if(result != null)
-            {
-                return result;
-            }
-            
+        {     
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.CarRanted);           
+        }
+
+        public IResult CheckIfCarAvaliable(int carId, DateTime rentDate, DateTime returnDate)
+        {
+            var result = _rentalDal.GetAll(r => r.CarId == carId).Any();
+
+            if (result)
+            {
+                List<Rental> rentals = _rentalDal.GetAll(r => r.CarId == carId);
+
+                foreach (var rental in rentals)
+                {
+                    if ((rental.RentDate <= rentDate && rental.ReturnDate >= rentDate) || (rental.RentDate <= returnDate && rental.ReturnDate >= returnDate))
+                    {
+                        return new ErrorResult(Messages.CarNotAvaliable);
+                    }
+
+                    return new SuccessResult(Messages.CarAvaliable);
+                }
+            }
+
+            return new SuccessResult(Messages.CarAvaliable);
         }
 
         public IDataResult<List<Rental>> GetAll()
@@ -50,14 +65,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RentalDetailDTO>>(_rentalDal.GetRentalDetails());
         }
 
-        private IResult CheckIfCarAvaliable(int carId)
-        {
-            var result = _rentalDal.GetAll(r => r.CarId == carId && r.ReturnDate == null).Any();
-            if(result)
-            {
-                return new ErrorResult(Messages.CarIsNotAvaliable);
-            }
-            return new SuccessResult();                
-        }
+        
     }
 }
