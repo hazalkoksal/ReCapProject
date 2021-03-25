@@ -40,9 +40,9 @@ namespace Business.Concrete
                     {
                         return new ErrorResult(Messages.CarNotAvaliable);
                     }
-
-                    return new SuccessResult(Messages.CarAvaliable);
                 }
+
+                return new SuccessResult(Messages.CarAvaliable);
             }
 
             return new SuccessResult(Messages.CarAvaliable);
