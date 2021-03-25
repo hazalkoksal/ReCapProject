@@ -30,12 +30,10 @@ namespace Business.Concrete
 
         public IResult CheckIfCarAvaliable(int carId, DateTime rentDate, DateTime returnDate)
         {
-            var result = _rentalDal.GetAll(r => r.CarId == carId).Any();
+            var rentals = _rentalDal.GetAll(r => r.CarId == carId) != null ? _rentalDal.GetAll(r => r.CarId == carId) : null;
 
-            if (result)
+            if(rentals != null)
             {
-                List<Rental> rentals = _rentalDal.GetAll(r => r.CarId == carId);
-
                 foreach (var rental in rentals)
                 {
                     if ((rental.RentDate <= rentDate && rental.ReturnDate >= rentDate) || (rental.RentDate <= returnDate && rental.ReturnDate >= returnDate))

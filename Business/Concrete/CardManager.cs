@@ -26,12 +26,10 @@ namespace Business.Concrete
 
         public IResult CheckIfCardValid(Card card)
         {
-            var result = _cardDal.GetAll(c => c.CardNumber == card.CardNumber).Any();
+            var creditCard = _cardDal.Get(c => c.CardNumber == card.CardNumber) != null ? _cardDal.Get(c => c.CardNumber == card.CardNumber) : null;
 
-            if(result)
+            if(creditCard != null)
             {
-                Card creditCard = _cardDal.GetAll(c => c.CardNumber == card.CardNumber).FirstOrDefault();
-
                 if (card.CardNumber == creditCard.CardNumber &&
                     card.CustomerName == creditCard.CustomerName &&
                     card.ExpirationDate == creditCard.ExpirationDate &&
