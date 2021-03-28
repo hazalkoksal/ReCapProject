@@ -36,7 +36,7 @@ namespace Business.Concrete
             {
                 foreach (var rental in rentals)
                 {
-                    if ((rental.RentDate <= rentDate && rental.ReturnDate >= rentDate) || (rental.RentDate <= returnDate && rental.ReturnDate >= returnDate))
+                    if ((rental.RentDate <= rentDate && rental.ReturnDate >= rentDate) || (rental.RentDate <= returnDate && rental.ReturnDate >= returnDate) || (rentDate <= rental.RentDate && returnDate >= rental.ReturnDate))
                     {
                         return new ErrorResult(Messages.CarNotAvaliable);
                     }
