@@ -49,7 +49,7 @@ namespace Core.Utilities.Helpers
             File.Delete(sourcePath);
         }
 
-        public static (string newPath, string pathTwo) NewPath(IFormFile file) //newPath-->resmi kaydedeceği yol, pathTwo-->resmin proje içindeki yolu
+        public static (string newPath, string pathTwo) NewPath(IFormFile file) //newPath-->resmin kaydedildiği yol, pathTwo-->resmin proje içindeki yolu
         {
             FileInfo fileInfo = new FileInfo(file.FileName); //dosya adı
             string fileExtension = fileInfo.Extension; //dosya uzantısı
