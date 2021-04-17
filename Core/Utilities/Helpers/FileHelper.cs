@@ -12,26 +12,36 @@ namespace Core.Utilities.Helpers
         public static string Add(IFormFile file)
         {
             var result = NewPath(file);
+            var sourcePath = Path.GetTempFileName();
 
-            using (var stream = new FileStream(result, FileMode.Create))
+            if(file.Length > 0)
             {
-                file.CopyTo(stream);
+                using (var stream = new FileStream(sourcePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
             }
 
-            return result;
+            File.Move(sourcePath, result.newPath);
+            
+            return result.pathTwo;
         }
 
         public static string Update(string sourcePath,IFormFile file)
         {
             var result = NewPath(file);
 
-            using (var stream = new FileStream(result, FileMode.Create))
+            if(sourcePath.Length > 0)
             {
-                file.CopyTo(stream);
+                using (var stream = new FileStream(result.newPath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
             }
-
+         
             File.Delete(sourcePath);
-            return result;
+
+            return result.pathTwo;
         }
 
         public static void Delete(string sourcePath)
@@ -39,16 +49,16 @@ namespace Core.Utilities.Helpers
             File.Delete(sourcePath);
         }
 
-        public static string NewPath(IFormFile file)
+        public static (string newPath, string pathTwo) NewPath(IFormFile file)
         {
             FileInfo fileInfo = new FileInfo(file.FileName); //dosya adı
             string fileExtension = fileInfo.Extension; //dosya uzantısı
 
             string path = Environment.CurrentDirectory + @"\wwwroot\Uploads"; //yeni yol
             var name = Guid.NewGuid().ToString() + fileExtension; //yeni ad + dosya uzantısı
-
             string result = $@"{path}\{name}";
-            return result;
+
+            return (result, $"\\Uploads\\{name}");
         }
     }
 }

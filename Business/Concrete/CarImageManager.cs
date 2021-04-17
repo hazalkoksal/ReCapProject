@@ -83,7 +83,7 @@ namespace Business.Concrete
 
             if (!result)
             {
-                string path = @"\wwwroot\Uploads\logo.jpg";
+                string path = @"\Uploads\logo.jpg";
 
                 List<CarImage> carImages = new List<CarImage>();
                 carImages.Add(new CarImage { CarId = carId, CarImagePath = path, Date = DateTime.Now });
