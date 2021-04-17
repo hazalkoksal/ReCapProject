@@ -24,7 +24,7 @@ namespace Core.Utilities.Helpers
 
             File.Move(sourcePath, result.newPath);
             
-            return result.pathTwo;
+            return result.path;
         }
 
         public static string Update(string sourcePath,IFormFile file)
@@ -41,7 +41,7 @@ namespace Core.Utilities.Helpers
          
             File.Delete(sourcePath);
 
-            return result.pathTwo;
+            return result.path;
         }
 
         public static void Delete(string sourcePath)
@@ -49,7 +49,7 @@ namespace Core.Utilities.Helpers
             File.Delete(sourcePath);
         }
 
-        public static (string newPath, string pathTwo) NewPath(IFormFile file)
+        public static (string newPath, string path) NewPath(IFormFile file) //newPath-->resmi kaydedeceği yol, path-->resmin proje içindeki yolu
         {
             FileInfo fileInfo = new FileInfo(file.FileName); //dosya adı
             string fileExtension = fileInfo.Extension; //dosya uzantısı
