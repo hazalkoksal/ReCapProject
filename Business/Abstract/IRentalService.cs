@@ -14,5 +14,6 @@ namespace Business.Abstract
         IDataResult<Rental> GetById(int rentalId);
         IDataResult<List<RentalDetailDTO>> GetRentalDetails();
         IResult CheckIfCarAvaliable(int carId, DateTime rentDate, DateTime returnDate);
+        IResult CheckIfFindexPointEnough(int carId, int customerId);
     }
 }

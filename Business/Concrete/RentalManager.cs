@@ -15,11 +15,14 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
+        ICarService _carService;
+        ICustomerService _customerService;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICarService carService, ICustomerService customerService)
         {
-
             _rentalDal = rentalDal;
+            _carService = carService;
+            _customerService = customerService;
         }
 
         public IResult Add(Rental rental)
@@ -48,6 +51,19 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarAvaliable);
         }
 
+        public IResult CheckIfFindexPointEnough(int carId, int customerId)
+        {
+            var car = _carService.GetById(carId).Data;
+            var customer = _customerService.GetById(customerId).Data;
+
+            if (car.FindexPoint > customer.FindexPoint)
+            {
+                return new ErrorResult(Messages.NotEnoughFindexPoint);
+            }
+
+            return new SuccessResult();
+        }
+
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
@@ -62,7 +78,6 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<RentalDetailDTO>>(_rentalDal.GetRentalDetails());
         }
-
         
     }
 }
