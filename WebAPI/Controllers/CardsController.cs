@@ -37,7 +37,13 @@ namespace WebAPI.Controllers
         public IActionResult CheckIfCardValid(Card card)
         {
             var result = _cardService.CheckIfCardValid(card);
-            return Ok(result);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
     }
 }

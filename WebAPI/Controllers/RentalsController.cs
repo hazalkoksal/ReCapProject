@@ -76,14 +76,26 @@ namespace WebAPI.Controllers
         public IActionResult CheckIfCarAvaliable(int carId, DateTime rentDate, DateTime returnDate)
         {
             var result = _rentalService.CheckIfCarAvaliable(carId, rentDate, returnDate);
-            return Ok(result);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
 
         [HttpGet("checkiffindexpointenough")]
         public IActionResult CheckIfFindexPointEnough(int carId, int customerId)
         {
             var result = _rentalService.CheckIfFindexPointEnough(carId, customerId);
-            return Ok(result);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
     }
 }
