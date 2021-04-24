@@ -31,7 +31,7 @@ namespace Business.Concrete
             if(creditCard != null)
             {
                 if (card.CardNumber == creditCard.CardNumber &&
-                    card.CustomerName == creditCard.CustomerName &&
+                    card.CardholderName == creditCard.CardholderName &&
                     card.ExpirationDate == creditCard.ExpirationDate &&
                     card.CVV == creditCard.CVV)
                 {
