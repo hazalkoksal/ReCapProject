@@ -8,7 +8,6 @@ namespace Business.Abstract
 {
     public interface ICardService
     {
-        IDataResult<List<Card>> GetAll();
         IResult CheckIfCardValid(Card card);  
     }
 }

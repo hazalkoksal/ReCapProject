@@ -19,21 +19,16 @@ namespace Business.Concrete
             _cardDal = cardDal;
         }
 
-        public IDataResult<List<Card>> GetAll()
-        {
-            return new SuccessDataResult<List<Card>>(_cardDal.GetAll());
-        }
-
         public IResult CheckIfCardValid(Card card)
         {
-            var creditCard = _cardDal.Get(c => c.CardNumber == card.CardNumber) != null ? _cardDal.Get(c => c.CardNumber == card.CardNumber) : null;
+            var bankCard = _cardDal.Get(c => c.CardNumber == card.CardNumber) != null ? _cardDal.Get(c => c.CardNumber == card.CardNumber) : null;
 
-            if(creditCard != null)
+            if(bankCard != null)
             {
-                if (card.CardNumber == creditCard.CardNumber &&
-                    card.CardholderName == creditCard.CardholderName &&
-                    card.ExpirationDate == creditCard.ExpirationDate &&
-                    card.CVV == creditCard.CVV)
+                if (card.CardNumber == bankCard.CardNumber &&
+                    card.CardholderName == bankCard.CardholderName &&
+                    card.ExpirationDate == bankCard.ExpirationDate &&
+                    card.CVV == bankCard.CVV)
                 {
                     return new SuccessResult(Messages.CardValid);
                 }

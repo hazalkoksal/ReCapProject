@@ -20,19 +20,6 @@ namespace WebAPI.Controllers
             _cardService = cardService;
         }
 
-        [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            var result = _cardService.GetAll();
-
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
-        }
-
         [HttpPost("checkifcardvalid")]
         public IActionResult CheckIfCardValid(Card card)
         {
