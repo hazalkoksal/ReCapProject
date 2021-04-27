@@ -19,7 +19,7 @@ namespace Business.Constants
         public static string CarRanted = "Araç kiralandı";
         public static string CarAvaliable = "Araç kiralanabilir";
         public static string CarNotAvaliable = "Seçilen tarih aralığında araç henüz teslim edilmediği için kiralanamaz";
-        public static string NotEnoughFindexPoint = "Müşterinin findeks puanı aracı kiralamak için yeterli değil";
+        public static string NotEnoughFindexPoint = "Findeks puanınız aracı kiralamak için yeterli değil";
 
         //CarImage
         public static string ImageCountOfCarError = "Bir aracın en fazla 5 fotoğrafı olabilir";
