@@ -41,6 +41,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CardManager>().As<ICardService>().SingleInstance();
             builder.RegisterType<EFCardDal>().As<ICardDal>().SingleInstance();
 
+            builder.RegisterType<CreditCardManager>().As<ICreditCardService>().SingleInstance();
+            builder.RegisterType<EFCreditCardDal>().As<ICreditCardDal>().SingleInstance();
+
             builder.RegisterType<AuthManager>().As<IAuthService>();
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();

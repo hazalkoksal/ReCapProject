@@ -18,7 +18,7 @@ namespace Business.Constants
         //Rental
         public static string CarRanted = "Araç kiralandı";
         public static string CarAvaliable = "Araç kiralanabilir";
-        public static string CarNotAvaliable = "Seçtiğiniz tarih aralığında araç kiradadır";
+        public static string CarNotAvaliable = "Seçilen tarih aralığında araç henüz teslim edilmediği için kiralanamaz";
         public static string NotEnoughFindexPoint = "Müşterinin findeks puanı aracı kiralamak için yeterli değil";
 
         //CarImage
