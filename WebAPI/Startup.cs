@@ -99,6 +99,8 @@ namespace WebAPI
 
             app.UseRouting();
 
+            app.UseStaticFiles(); //wwwroot klasörüne eriþim için ekledik
+
             app.UseAuthentication();
 
             app.UseAuthorization();
