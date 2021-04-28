@@ -54,11 +54,11 @@ namespace Core.Utilities.Helpers
             FileInfo fileInfo = new FileInfo(file.FileName); //dosya adı
             string fileExtension = fileInfo.Extension; //dosya uzantısı
 
-            string path = Environment.CurrentDirectory + @"\wwwroot\Uploads"; //yeni yol
+            string path = Environment.CurrentDirectory + @"\wwwroot\img"; //yeni yol
             var name = Guid.NewGuid().ToString() + fileExtension; //yeni ad + dosya uzantısı
             string result = $@"{path}\{name}";
 
-            return (result, $"\\Uploads\\{name}");
+            return (result, $"\\img\\{name}");
         }
     }
 }
