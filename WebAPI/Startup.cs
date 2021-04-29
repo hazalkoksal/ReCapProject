@@ -99,7 +99,7 @@ namespace WebAPI
 
             app.UseRouting();
 
-            app.UseStaticFiles(); //wwwroot klasörüne eriþim için ekledik
+            app.UseStaticFiles(); //wwwroot klasörüne eriþim için
 
             app.UseAuthentication();
 
